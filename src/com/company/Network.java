@@ -2,7 +2,9 @@ package com.company;
 
 import com.company.Delta.Neuron;
 import com.company.Delta.TrainingPattern;
+import com.company.Madaline.Madaline;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -236,5 +238,10 @@ class Network {
         System.out.println("Expected output: " + pattern6.get(0).getExpectedOutput());
         System.out.println(neuron6.toString());
         System.out.println("Calculated output: " + neuron6.calculateOutput(pattern6.get(0).getInputs()));
+    }
+
+    void madalineTask2() {
+        Madaline madaline = new Madaline(new File("res/constructionFile.txt"));
+        madaline.showOutput(new File("res/testFile.txt"));
     }
 }

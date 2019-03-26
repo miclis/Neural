@@ -9,6 +9,9 @@ public class Main {
         // DELTA RULE
 //        network.deltaSingle();
 //        network.deltaMultiple();
-        network.deltaTask1();
+//        network.deltaTask1();
+
+        // MADALINE
+        network.madalineTask2();
     }
 }
