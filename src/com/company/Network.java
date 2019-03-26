@@ -129,6 +129,9 @@ class Network {
         System.out.println("Calculated output: " + neuron2.calculateOutput(inputs4));
     }
 
+    /**
+     * Writes to the screen all necessary data for Task 1
+     */
     void deltaTask1() {
         System.out.println("=======Delta Rule - Single=======");
         // Test 1
