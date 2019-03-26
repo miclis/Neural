@@ -12,6 +12,17 @@ public class TrainingPattern {
     private int inputCount;
 
     /**
+     * Training Pattern constructor
+     * @param inputs input values
+     * @param expectedOutput expected output value
+     */
+    public TrainingPattern(List<Double> inputs, double expectedOutput) {
+        this.inputs = inputs;
+        this.inputCount = inputs.size();
+        this.expectedOutput = expectedOutput;
+    }
+
+    /**
      * Standard getters
      */
     public List<Double> getInputs() {
@@ -24,17 +35,6 @@ public class TrainingPattern {
 
     public int getInputCount() {
         return inputCount;
-    }
-
-    /**
-     * Training Pattern constructor
-     * @param inputs input values
-     * @param expectedOutput expected output value
-     */
-    public TrainingPattern(List<Double> inputs, double expectedOutput) {
-        this.inputs = inputs;
-        this.inputCount = inputs.size();
-        this.expectedOutput = expectedOutput;
     }
 
     /**
@@ -71,6 +71,7 @@ public class TrainingPattern {
                 inputs.stream()
                         .map(Object::toString)
                         .map(i -> i.substring(0, Math.min(6, i.length())))
-                        .collect(Collectors.joining(", "));
+                        .collect(Collectors.joining(", ")) +
+                "\nExpected output: " + expectedOutput;
     }
 }
