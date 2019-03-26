@@ -7,7 +7,8 @@ public class Main {
         Network network = new Network();
 
         // DELTA RULE
-        network.deltaSingle();
-        network.deltaMultiple();
+//        network.deltaSingle();
+//        network.deltaMultiple();
+        network.deltaTask1();
     }
 }

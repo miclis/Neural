@@ -128,4 +128,113 @@ class Network {
         System.out.println("Calculated output: " + neuron2.calculateOutput(inputs3));
         System.out.println("Calculated output: " + neuron2.calculateOutput(inputs4));
     }
+
+    void deltaTask1() {
+        System.out.println("=======Delta Rule - Single=======");
+        // Test 1
+        System.out.println("=======Test 1=======");
+        int numberOfInputs = 4;
+        int numberOfTrainingEpochs = 50;
+        double trainingStep = 0.01;
+        double minWeight = 0;
+        double maxWeight = 1;
+        double minInput = -1;
+        double maxInput = 10;
+
+        List<TrainingPattern> pattern1 = TrainingPattern.generatePatterns(1, numberOfInputs, minInput, maxInput);
+        Neuron neuron1 = new Neuron(numberOfInputs, minWeight, maxWeight);
+        neuron1.teach(pattern1, numberOfTrainingEpochs, trainingStep);
+        System.out.println(pattern1.get(0).toString());
+        System.out.println(neuron1.toString());
+        System.out.println("Calculated output: " + neuron1.calculateOutput(pattern1.get(0).getInputs()));
+
+        // Test 2
+        System.out.println("=======Test 2=======");
+        numberOfInputs = 4;
+        numberOfTrainingEpochs = 50;
+        trainingStep = 0.01;
+        minWeight = 0;
+        maxWeight = 2;
+        minInput = -10;
+        maxInput = 10;
+
+        List<TrainingPattern> pattern2 = TrainingPattern.generatePatterns(1, numberOfInputs, minInput, maxInput);
+        Neuron neuron2 = new Neuron(numberOfInputs, minWeight, maxWeight);
+        neuron2.teach(pattern2.get(0), numberOfTrainingEpochs, trainingStep);
+        System.out.println(pattern2.get(0).toString());
+        System.out.println(neuron2.toString());
+        System.out.println("Calculated output: " + neuron2.calculateOutput(pattern2.get(0).getInputs()));
+
+        // Test 3
+        System.out.println("=======Test 3=======");
+        numberOfInputs = 4;
+        numberOfTrainingEpochs = 70;
+        trainingStep = 0.01;
+        minWeight = 0;
+        maxWeight = 2;
+        minInput = -10;
+        maxInput = 10;
+
+        List<TrainingPattern> pattern3 = TrainingPattern.generatePatterns(1, numberOfInputs, minInput, maxInput);
+        Neuron neuron3 = new Neuron(numberOfInputs, minWeight, maxWeight);
+        neuron3.teach(pattern3.get(0), numberOfTrainingEpochs, trainingStep);
+        System.out.println(pattern3.get(0).toString());
+        System.out.println(neuron3.toString());
+        System.out.println("Calculated output: " + neuron3.calculateOutput(pattern3.get(0).getInputs()));
+
+        System.out.println("=======Delta Rule - Multiple=======");
+        // Test 4
+        System.out.println("=======Test 4=======");
+        numberOfInputs = 4;
+        numberOfTrainingEpochs = 100;
+        trainingStep = 0.01;
+        minWeight = 0;
+        maxWeight = 2;
+        minInput = 0;
+        maxInput = 10;
+        int numberOfPatterns = 2;   // (a) numberOfPatterns < numberOfInputs
+
+        List<TrainingPattern> pattern4 = TrainingPattern.generatePatterns(numberOfPatterns, numberOfInputs, minInput, maxInput);
+        Neuron neuron4 = new Neuron(numberOfInputs, minWeight, maxWeight);
+        neuron4.teach(pattern4, numberOfTrainingEpochs, trainingStep);
+        System.out.println("Expected output: " + pattern4.get(0).getExpectedOutput());
+        System.out.println(neuron4.toString());
+        System.out.println("Calculated output: " + neuron4.calculateOutput(pattern4.get(0).getInputs()));
+
+        // Test 5
+        System.out.println("=======Test 5=======");
+        numberOfInputs = 4;
+        numberOfTrainingEpochs = 100;
+        trainingStep = 0.01;
+        minWeight = 0;
+        maxWeight = 2;
+        minInput = 0;
+        maxInput = 10;
+        numberOfPatterns = 4;   // (a) numberOfPatterns == numberOfInputs
+
+        List<TrainingPattern> pattern5 = TrainingPattern.generatePatterns(numberOfPatterns, numberOfInputs, minInput, maxInput);
+        Neuron neuron5 = new Neuron(numberOfInputs, minWeight, maxWeight);
+        neuron5.teach(pattern5, numberOfTrainingEpochs, trainingStep);
+        System.out.println("Expected output: " + pattern5.get(0).getExpectedOutput());
+        System.out.println(neuron5.toString());
+        System.out.println("Calculated output: " + neuron5.calculateOutput(pattern5.get(0).getInputs()));
+
+        // Test 6
+        System.out.println("=======Test 6=======");
+        numberOfInputs = 4;
+        numberOfTrainingEpochs = 100;
+        trainingStep = 0.01;
+        minWeight = 0;
+        maxWeight = 2;
+        minInput = 0;
+        maxInput = 10;
+        numberOfPatterns = 6;   // (a) numberOfPatterns > numberOfInputs
+
+        List<TrainingPattern> pattern6 = TrainingPattern.generatePatterns(numberOfPatterns, numberOfInputs, minInput, maxInput);
+        Neuron neuron6 = new Neuron(numberOfInputs, minWeight, maxWeight);
+        neuron6.teach(pattern6, numberOfTrainingEpochs, trainingStep);
+        System.out.println("Expected output: " + pattern6.get(0).getExpectedOutput());
+        System.out.println(neuron6.toString());
+        System.out.println("Calculated output: " + neuron6.calculateOutput(pattern6.get(0).getInputs()));
+    }
 }
