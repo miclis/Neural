@@ -84,6 +84,7 @@ public class Neuron {
 
                 double y = calculateOutput(singlePattern.getInputs());
                 for (int j = 0; j < inputCount; j++) {
+                    // Main Delta Rule formula applied here
                     double newWeight = weights.get(j) +
                                         step*(singlePattern.getExpectedOutput() - y)*singlePattern.getInputs().get(j);
                     weights.set(j, newWeight);
