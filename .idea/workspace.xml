@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eae310c5-c5ba-41dc-801c-91f587765bc6" name="Default Changelist" comment="Additional methods added.&#10;Helper class &quot;Network&quot; created for demonstration purposes">
+    <list default="true" id="eae310c5-c5ba-41dc-801c-91f587765bc6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Delta/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Delta/Neuron.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path=".idea/" />
@@ -136,7 +135,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553610684459" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553611233296" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.idea" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Ignored.Files" />
   </component>
@@ -191,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1553610531595</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added comment specifying where main Delta Rule formula is used">
+      <created>1553611005431</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1553611005431</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -202,12 +208,12 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="SOQL Query" />
       <window_info anchor="bottom" id="Log Viewer" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Messages" weight="0.32936078" />
       <window_info anchor="bottom" id="Anonymous Apex" />
@@ -231,7 +237,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Classes for Delta Rule task prepared" />
     <MESSAGE value="Additional methods added.&#10;Helper class &quot;Network&quot; created for demonstration purposes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Additional methods added.&#10;Helper class &quot;Network&quot; created for demonstration purposes" />
+    <MESSAGE value="Added comment specifying where main Delta Rule formula is used" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added comment specifying where main Delta Rule formula is used" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/company/Network.java">
