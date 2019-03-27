@@ -12,6 +12,8 @@ public class Main {
 //        network.deltaTask1();
 
         // MADALINE
-        network.madalineTask2();
+//        network.madalineTask2();
+
+        // MULTILAYER PERCEPTION
     }
 }

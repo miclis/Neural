@@ -7,9 +7,15 @@ import java.util.stream.Collectors;
 
 public class TrainingPattern {
 
-    private List<Double> inputs;
+    protected List<Double> inputs;
     private double expectedOutput;
-    private int inputCount;
+    protected int inputCount;
+
+    /**
+     * Default Training Pattern constructor used by Subclasses
+     */
+    protected TrainingPattern() {
+    }
 
     /**
      * Training Pattern constructor
