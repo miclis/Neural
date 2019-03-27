@@ -3,9 +3,12 @@ package com.company;
 import com.company.Delta.Neuron;
 import com.company.Delta.TrainingPattern;
 import com.company.Madaline.Madaline;
+import com.company.Multilayer.Multilayer;
+import com.company.Multilayer.MultilayerTrainingPattern;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class Network {
@@ -243,5 +246,84 @@ class Network {
     void madalineTask2() {
         Madaline madaline = new Madaline(new File("res/constructionFile.txt"));
         madaline.showOutput(new File("res/testFile.txt"));
+    }
+
+    void multilayerPerception() {
+        Multilayer multilayer1 = new Multilayer(2,4,-0.5,0.5, false);
+        Multilayer multilayer2 = new Multilayer(2,4,-0.5,0.5, true);
+
+        List<Double> inputs1 = new ArrayList<>(Arrays.asList(1.0,0.0,0.0,0.0));
+        List<Double> outputs1 = new ArrayList<>(Arrays.asList(1.0,0.0,0.0,0.0));
+
+        List<Double> inputs2 = new ArrayList<>(Arrays.asList(0.0,1.0,0.0,0.0));
+        List<Double> outputs2 = new ArrayList<>(Arrays.asList(0.0,1.0,0.0,0.0));
+
+        List<Double> inputs3 = new ArrayList<>(Arrays.asList(0.0,0.0,1.0,0.0));
+        List<Double> outputs3 = new ArrayList<>(Arrays.asList(0.0,0.0,1.0,0.0));
+
+        List<Double> inputs4 = new ArrayList<>(Arrays.asList(0.0,0.0,0.0,1.0));
+        List<Double> outputs4 = new ArrayList<>( Arrays.asList(0.0,0.0,0.0,1.0));
+
+        List<MultilayerTrainingPattern> trainingPatterns = new ArrayList<>();
+        trainingPatterns.add(new MultilayerTrainingPattern(inputs1,outputs1));
+        trainingPatterns.add(new MultilayerTrainingPattern(inputs2,outputs2));
+        trainingPatterns.add(new MultilayerTrainingPattern(inputs3,outputs3));
+        trainingPatterns.add(new MultilayerTrainingPattern(inputs4,outputs4));
+
+        MultilayerTrainingPattern multilayerTrainingPattern1 = new MultilayerTrainingPattern(inputs1,outputs1);
+        MultilayerTrainingPattern multilayerTrainingPattern2 = new MultilayerTrainingPattern(inputs2,outputs2);
+        MultilayerTrainingPattern multilayerTrainingPattern3 = new MultilayerTrainingPattern(inputs3,outputs3);
+        MultilayerTrainingPattern multilayerTrainingPattern4 = new MultilayerTrainingPattern(inputs4,outputs4);
+
+//        int trainingEpochs = 50000;
+//        for (int i = 0; i < trainingEpochs; i++) {
+//            multilayer1.teach(multilayerTrainingPattern1, 0.005);
+//            multilayer1.teach(multilayerTrainingPattern2, 0.005);
+//            multilayer1.teach(multilayerTrainingPattern3, 0.005);
+//            multilayer1.teach(multilayerTrainingPattern4, 0.005);
+//        }
+
+        multilayer1.teach(trainingPatterns, 50000, 0.005);
+        multilayer2.teach(trainingPatterns, 50000, 0.005);
+
+        System.out.println("BAIS off:");
+        System.out.println("Hidden neurons:");
+        System.out.println(multilayer1.getHiddenNeurons());
+        System.out.println("===============");
+        System.out.println("Output neurons:");
+        System.out.println(multilayer1.getOutputNeurons());
+        System.out.println("===============");
+
+        System.out.println("Result of first input: ");
+        System.out.println(multilayer1.calculateOutputs(inputs1));
+        System.out.println("Result of second input: ");
+        System.out.println(multilayer1.calculateOutputs(inputs2));
+        System.out.println("Result of third input: ");
+        System.out.println(multilayer1.calculateOutputs(inputs3));
+        System.out.println("Result of fourth input: ");
+        System.out.println(multilayer1.calculateOutputs(inputs4));
+
+        System.out.println("\nBAIS active:");
+        System.out.println("Hidden neurons:");
+        System.out.println(multilayer2.getHiddenNeurons());
+        System.out.println("===============");
+        System.out.println("Output neurons:");
+        System.out.println(multilayer2.getOutputNeurons());
+        System.out.println("===============");
+
+        System.out.println("Result of first input: ");
+        System.out.println(multilayer2.calculateOutputs(inputs1));
+        System.out.println("Result of second input: ");
+        System.out.println(multilayer2.calculateOutputs(inputs2));
+        System.out.println("Result of third input: ");
+        System.out.println(multilayer2.calculateOutputs(inputs3));
+        System.out.println("Result of fourth input: ");
+        System.out.println(multilayer2.calculateOutputs(inputs4));
+
+        /**
+         * THOUGHTS
+         * BAIS off - two patterns can be trained
+         * BAIS active - none? (maybe training epochs / training step adjustment can help)
+         */
     }
 }

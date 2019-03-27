@@ -114,7 +114,7 @@ public class Neuron {
 
     @Override
     public String toString() {
-        return "Neuron size: " +
+        return "\nNeuron size: " +
                 inputCount +
                 "\nWeights in neuron:\n" +
                 weights.stream()

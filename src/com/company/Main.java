@@ -15,5 +15,6 @@ public class Main {
 //        network.madalineTask2();
 
         // MULTILAYER PERCEPTION
+        network.multilayerPerception();
     }
 }

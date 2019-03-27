@@ -39,7 +39,41 @@ public class Multilayer {
     }
 
     /**
-     * Teaches Multilayer Perception neural network on a provided pattern
+     * Calculates output results for provided inputs
+     * @param inputs list of input values
+     * @return list of output values
+     */
+    public List<Double> calculateOutputs(List<Double> inputs) {
+        List<Double> modifiedInputs = new ArrayList<>(inputs);
+
+        if (BIASactive) modifiedInputs.add(1.0);
+
+        List<Double> v = getResults(inputs, hiddenNeurons);
+        List<Double> modifiedHiddenOutputs = new ArrayList<>(v);
+
+        if (BIASactive) {
+            modifiedHiddenOutputs.add(1.0);
+            modifiedHiddenOutputs.add(1.0);
+        }
+        return getResults(v, outputNeurons);
+    }
+
+    /**
+     * Teaches Multilayer Perception neural network on multiple provided patterns
+     * @param patterns list of training patterns
+     * @param epochs number of training epochs
+     * @param step training step
+     */
+    public void teach(List<MultilayerTrainingPattern> patterns, int epochs, double step) {
+        for (int i = 0; i < epochs; i++) {
+            for (MultilayerTrainingPattern pattern : patterns) {
+                teach(pattern, step);
+            }
+        }
+    }
+
+    /**
+     * Teaches Multilayer Perception neural network on single provided pattern
      * @param pattern pattern to learn from
      * @param step training step
      */
