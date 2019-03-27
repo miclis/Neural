@@ -265,26 +265,17 @@ class Network {
         List<Double> outputs4 = new ArrayList<>( Arrays.asList(0.0,0.0,0.0,1.0));
 
         List<MultilayerTrainingPattern> trainingPatterns = new ArrayList<>();
-        trainingPatterns.add(new MultilayerTrainingPattern(inputs1,outputs1));
-        trainingPatterns.add(new MultilayerTrainingPattern(inputs2,outputs2));
-        trainingPatterns.add(new MultilayerTrainingPattern(inputs3,outputs3));
-        trainingPatterns.add(new MultilayerTrainingPattern(inputs4,outputs4));
-
         MultilayerTrainingPattern multilayerTrainingPattern1 = new MultilayerTrainingPattern(inputs1,outputs1);
         MultilayerTrainingPattern multilayerTrainingPattern2 = new MultilayerTrainingPattern(inputs2,outputs2);
         MultilayerTrainingPattern multilayerTrainingPattern3 = new MultilayerTrainingPattern(inputs3,outputs3);
         MultilayerTrainingPattern multilayerTrainingPattern4 = new MultilayerTrainingPattern(inputs4,outputs4);
-
-//        int trainingEpochs = 50000;
-//        for (int i = 0; i < trainingEpochs; i++) {
-//            multilayer1.teach(multilayerTrainingPattern1, 0.005);
-//            multilayer1.teach(multilayerTrainingPattern2, 0.005);
-//            multilayer1.teach(multilayerTrainingPattern3, 0.005);
-//            multilayer1.teach(multilayerTrainingPattern4, 0.005);
-//        }
+        trainingPatterns.add(multilayerTrainingPattern1);
+        trainingPatterns.add(multilayerTrainingPattern2);
+        trainingPatterns.add(multilayerTrainingPattern3);
+        trainingPatterns.add(multilayerTrainingPattern4);
 
         multilayer1.teach(trainingPatterns, 50000, 0.005);
-        multilayer2.teach(trainingPatterns, 50000, 0.005);
+        multilayer2.teach(trainingPatterns, 30000, 0.03);
 
         System.out.println("BAIS off:");
         System.out.println("Hidden neurons:");
@@ -320,10 +311,28 @@ class Network {
         System.out.println("Result of fourth input: ");
         System.out.println(multilayer2.calculateOutputs(inputs4));
 
+        // Showing hidden layer neurons after the training process for each of the training patterns
+        Multilayer multilayer3 = new Multilayer(2,4,-0.5,0.5, true);
+
+        System.out.println("=======================================");
+        System.out.println("Showing hidden layers:");
+        multilayer3.teach(multilayerTrainingPattern1, 30000, 0.03);
+        System.out.println("Pattern 1");
+        System.out.println(multilayer3.getHiddenNeurons());
+        multilayer3.teach(multilayerTrainingPattern2, 30000, 0.03);
+        System.out.println("\nPattern 2");
+        System.out.println(multilayer3.getHiddenNeurons());
+        multilayer3.teach(multilayerTrainingPattern3, 30000, 0.03);
+        System.out.println("\nPattern 3");
+        System.out.println(multilayer3.getHiddenNeurons());
+        multilayer3.teach(multilayerTrainingPattern4, 30000, 0.03);
+        System.out.println("\nPattern 4");
+        System.out.println(multilayer3.getHiddenNeurons());
+
         /**
          * THOUGHTS
          * BAIS off - two patterns can be trained
-         * BAIS active - none? (maybe training epochs / training step adjustment can help)
+         * BAIS active - all 4 patterns trained
          */
     }
 }

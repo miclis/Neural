@@ -53,9 +53,20 @@ public class Multilayer {
 
         if (BIASactive) {
             modifiedHiddenOutputs.add(1.0);
-            modifiedHiddenOutputs.add(1.0);
         }
-        return getResults(v, outputNeurons);
+        return getResults(modifiedHiddenOutputs, outputNeurons);
+    }
+
+    /**
+     * Teaches Multilayer Perception neural network on single provided patterns
+     * @param pattern pattern to learn from
+     * @param epochs number of training epochs
+     * @param step training step
+     */
+    public void teach(MultilayerTrainingPattern pattern, int epochs, double step) {
+        for (int i = 0; i < epochs; i++) {
+            teach(pattern, step);
+        }
     }
 
     /**
