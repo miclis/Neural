@@ -18,5 +18,6 @@ public class Main {
 //        network.multilayerPerception();
 
         // SGA
+        network.simpleGeneticAlgorithm();
     }
 }

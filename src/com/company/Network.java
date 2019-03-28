@@ -5,11 +5,13 @@ import com.company.Delta.TrainingPattern;
 import com.company.Madaline.Madaline;
 import com.company.Multilayer.Multilayer;
 import com.company.Multilayer.MultilayerTrainingPattern;
+import com.company.SGA.GeneticAlgorithm;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class Network {
 
@@ -334,5 +336,23 @@ class Network {
          * BAIS off - two patterns can be trained
          * BAIS active - all 4 patterns trained
          */
+    }
+
+    public void simpleGeneticAlgorithm() {
+        List<Double> resultsList = GeneticAlgorithm.GeneticAlgorithm(20, 10, 0.1, 0.1, GeneticAlgorithm.function);
+
+        List<Double> afterCalculationList = resultsList.stream().map(value -> GeneticAlgorithm.function.apply(value)).collect(Collectors.toList());
+
+        System.out.println("Initial values: ");
+        for (Double d : resultsList) {
+            System.out.println(d);
+        }
+        System.out.println("=======================");
+        System.out.println("Result values: ");
+        for (Double d : afterCalculationList) {
+            System.out.println(d);
+        }
+        System.out.println("=======================");
+        System.out.println("Biggest value: " + afterCalculationList.stream().max(Double::compareTo).get());
     }
 }
