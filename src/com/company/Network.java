@@ -2,11 +2,13 @@ package com.company;
 
 import com.company.Delta.Neuron;
 import com.company.Delta.TrainingPattern;
+import com.company.Kohonen.Kohonen;
 import com.company.Madaline.Madaline;
 import com.company.Multilayer.Multilayer;
 import com.company.Multilayer.MultilayerTrainingPattern;
 import com.company.SGA.GeneticAlgorithm;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -354,5 +356,16 @@ class Network {
         }
         System.out.println("=======================");
         System.out.println("Biggest value: " + afterCalculationList.stream().max(Double::compareTo).get());
+    }
+
+    void kohonen(){
+
+        Kohonen kohonen = new Kohonen(0);
+        kohonen.init();
+        kohonen.teach();
+        kohonen.compress();
+
+        BufferedImage imageDecompressed = kohonen.decompress();
+        System.out.println("PSNR is: " + kohonen.psnr(imageDecompressed) + " dB");
     }
 }

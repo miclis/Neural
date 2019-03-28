@@ -18,6 +18,9 @@ public class Main {
 //        network.multilayerPerception();
 
         // SGA
-        network.simpleGeneticAlgorithm();
+//        network.simpleGeneticAlgorithm();
+
+        // Kohonen
+        network.kohonen();
     }
 }
