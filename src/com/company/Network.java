@@ -338,7 +338,7 @@ class Network {
          */
     }
 
-    public void simpleGeneticAlgorithm() {
+    void simpleGeneticAlgorithm() {
         List<Double> resultsList = GeneticAlgorithm.GeneticAlgorithm(20, 10, 0.1, 0.1, GeneticAlgorithm.function);
 
         List<Double> afterCalculationList = resultsList.stream().map(value -> GeneticAlgorithm.function.apply(value)).collect(Collectors.toList());
