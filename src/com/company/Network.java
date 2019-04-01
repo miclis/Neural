@@ -314,20 +314,28 @@ class Network {
         // Showing hidden layer neurons after the training process for each of the training patterns
         Multilayer multilayer3 = new Multilayer(2,4,-0.5,0.5, true);
 
+        multilayer3.teach(trainingPatterns, 30000, 0.03);
+
         System.out.println("=======================================");
         System.out.println("Showing hidden layers:");
-        multilayer3.teach(multilayerTrainingPattern1, 30000, 0.03);
         System.out.println("Pattern 1");
-        System.out.println(multilayer3.getHiddenNeurons());
-        multilayer3.teach(multilayerTrainingPattern2, 30000, 0.03);
-        System.out.println("\nPattern 2");
-        System.out.println(multilayer3.getHiddenNeurons());
-        multilayer3.teach(multilayerTrainingPattern3, 30000, 0.03);
-        System.out.println("\nPattern 3");
-        System.out.println(multilayer3.getHiddenNeurons());
-        multilayer3.teach(multilayerTrainingPattern4, 30000, 0.03);
-        System.out.println("\nPattern 4");
-        System.out.println(multilayer3.getHiddenNeurons());
+        multilayer3.calculateOutputs(inputs1);
+        System.out.println(multilayer3.lastInputs);
+
+        System.out.println("Pattern 2");
+        multilayer3.calculateOutputs(inputs2);
+        System.out.println(multilayer3.lastInputs);
+
+        System.out.println("Pattern 3");
+        multilayer3.calculateOutputs(inputs3);
+        System.out.println(multilayer3.lastInputs);
+
+        System.out.println("Pattern 4");
+        multilayer3.calculateOutputs(inputs4);
+        System.out.println(multilayer3.lastInputs);
+
+
+
 
         /**
          * THOUGHTS

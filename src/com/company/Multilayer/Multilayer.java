@@ -12,6 +12,7 @@ public class Multilayer {
     private List<Neuron> outputNeurons;
     private List<Neuron> hiddenNeurons;
     private boolean BIASactive;
+    public List<Double> lastInputs;
 
     /**
      * Basic constructor for a multilayer perception neural network
@@ -50,6 +51,7 @@ public class Multilayer {
 
         List<Double> v = getResults(inputs, hiddenNeurons);
         List<Double> modifiedHiddenOutputs = new ArrayList<>(v);
+        lastInputs = new ArrayList<>(v);
 
         if (BIASactive) {
             modifiedHiddenOutputs.add(1.0);
@@ -97,6 +99,7 @@ public class Multilayer {
 
         // Applies inputs from input layer to the hidden layer; Prepares inputs for output layer
         List<Double> v1 = getResults(inputs, hiddenNeurons);
+
         if (BIASactive) v1.add(1.0);    // Adds BIAS Neuron input equal to 1
 
         // Applies inputs to the output layer
