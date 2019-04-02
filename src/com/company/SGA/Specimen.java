@@ -3,25 +3,25 @@ package com.company.SGA;
 import java.nio.ByteBuffer;
 import java.util.function.DoubleFunction;
 
-public class Subject {
+public class Specimen {
 
     private byte[] genes;
     private double fitness = 0;
 
     /**
-     * Subject constructor accepting a byte array of genes
+     * Specimen constructor accepting a byte array of genes
      * @param genes gene byte array
      */
-    public Subject(byte[] genes) {
+    public Specimen(byte[] genes) {
         this.genes = genes;
     }
 
     /**
-     * Subject constructor accepting a length of genome
-     * Creates a random genome
+     * Specimen constructor accepting a length of genome
+     * Creates a Specimen with random genome
      * @param DNALength genome's length
      */
-    public Subject(int DNALength) {
+    public Specimen(int DNALength) {
         genes = new byte[DNALength];
 
         double value = 2*Math.random() + 0.5;
@@ -29,7 +29,7 @@ public class Subject {
     }
 
     /**
-     * Customized Fitness getter
+     * Customized Fitness getter - also calculates fitness value and sets it
      * @param function function accepting double parameter & resulting with double value
      * @return fitness
      */
