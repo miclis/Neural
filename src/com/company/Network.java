@@ -200,9 +200,12 @@ class Network {
         List<TrainingPattern> pattern4 = TrainingPattern.generatePatterns(numberOfPatterns, numberOfInputs, minInput, maxInput);
         Neuron neuron4 = new Neuron(numberOfInputs, minWeight, maxWeight);
         neuron4.teach(pattern4, numberOfTrainingEpochs, trainingStep);
-        System.out.println("Expected output: " + pattern4.get(0).getExpectedOutput());
         System.out.println(neuron4.toString());
-        System.out.println("Calculated output: " + neuron4.calculateOutput(pattern4.get(0).getInputs()));
+
+        for (TrainingPattern pat : pattern4) {
+            System.out.println("Expected output: " + pat.getExpectedOutput());
+            System.out.println("Calculated output: " + neuron4.calculateOutput(pat.getInputs()));
+        }
 
         // Test 5
         System.out.println("=======Test 5=======");
@@ -218,9 +221,12 @@ class Network {
         List<TrainingPattern> pattern5 = TrainingPattern.generatePatterns(numberOfPatterns, numberOfInputs, minInput, maxInput);
         Neuron neuron5 = new Neuron(numberOfInputs, minWeight, maxWeight);
         neuron5.teach(pattern5, numberOfTrainingEpochs, trainingStep);
-        System.out.println("Expected output: " + pattern5.get(0).getExpectedOutput());
         System.out.println(neuron5.toString());
-        System.out.println("Calculated output: " + neuron5.calculateOutput(pattern5.get(0).getInputs()));
+
+        for (TrainingPattern pat : pattern5) {
+            System.out.println("Expected output: " + pat.getExpectedOutput());
+            System.out.println("Calculated output: " + neuron5.calculateOutput(pat.getInputs()));
+        }
 
         // Test 6
         System.out.println("=======Test 6=======");
@@ -236,8 +242,11 @@ class Network {
         List<TrainingPattern> pattern6 = TrainingPattern.generatePatterns(numberOfPatterns, numberOfInputs, minInput, maxInput);
         Neuron neuron6 = new Neuron(numberOfInputs, minWeight, maxWeight);
         neuron6.teach(pattern6, numberOfTrainingEpochs, trainingStep);
-        System.out.println("Expected output: " + pattern6.get(0).getExpectedOutput());
         System.out.println(neuron6.toString());
-        System.out.println("Calculated output: " + neuron6.calculateOutput(pattern6.get(0).getInputs()));
+
+        for (TrainingPattern pat : pattern6) {
+            System.out.println("Expected output: " + pat.getExpectedOutput());
+            System.out.println("Calculated output: " + neuron6.calculateOutput(pat.getInputs()));
+        }
     }
 }
