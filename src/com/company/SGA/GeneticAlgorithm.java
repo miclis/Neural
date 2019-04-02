@@ -40,10 +40,11 @@ public final class GeneticAlgorithm {
      * @return output of the algorithm
      */
     private static double runSGA(int M, double Pc, double Pm, DoubleFunction<Double> function) {
-        List<Subject> population = new ArrayList<>();
+        List<Specimen> population = new ArrayList<>();
 
+        // Creates population
         for (int i = 0; i < M; i++) {
-            population.add(new Subject(GENOME_LENGTH));
+            population.add(new Specimen(GENOME_LENGTH));
         }
 
         for (int i = 0; i < 100; i++) {
@@ -61,26 +62,26 @@ public final class GeneticAlgorithm {
      * @param function fitness function
      * @return list of subjects (new generation)
      */
-    private static List<Subject> createGeneration(List<Subject> population, double Pc, double Pm,
-                                                  DoubleFunction<Double> function) {
+    private static List<Specimen> createGeneration(List<Specimen> population, double Pc, double Pm,
+                                                   DoubleFunction<Double> function) {
 
-        population.forEach(subject -> subject.getFitness(function));
+        population.forEach(specimen -> specimen.getFitness(function));
 
-        List<Subject> newPopulation = new ArrayList<>();
-        population.forEach(subject -> {
+        List<Specimen> newPopulation = new ArrayList<>();
+        population.forEach(specimen -> {
 
-            // overall population fitness function
-            double overallFF = population.stream().mapToDouble(sSubject -> sSubject.getFitness(function)).sum(); // Consider putting outside of forEach
+            // Overall population fitness function
+            double overallFF = population.stream().mapToDouble(sSpecimen -> sSpecimen.getFitness(function)).sum(); // Consider putting outside of forEach
 
             double randomizer = Math.random();
-            Subject candidate1 = chooseCandidate(population, overallFF, function);
+            Specimen candidate1 = chooseCandidate(population, overallFF, function);
 
             // Crossing
             if (randomizer < Pc) newPopulation.add(cross(candidate1, chooseCandidate(population, overallFF, function)));
 
             // Mutation
             else if (randomizer < Pc + Pm)
-                newPopulation.add(cross(candidate1, chooseCandidate(population, overallFF, function)));
+                newPopulation.add(mutate(candidate1));
 
             // Reproduction
             else newPopulation.add(candidate1);
@@ -94,30 +95,29 @@ public final class GeneticAlgorithm {
      * @param population population to choose from
      * @param overallFF overall population fitness funtion
      * @param function function determining principles of choice
-     * @return chosen Subject
+     * @return chosen Specimen
      */
-    private static Subject chooseCandidate(List<Subject> population, double overallFF, DoubleFunction<Double> function) {
+    private static Specimen chooseCandidate(List<Specimen> population, double overallFF, DoubleFunction<Double> function) {
 
         double randomizer = Math.random();
         MutableDouble sum = new MutableDouble(0);
 
         return population.get((int)(
                 population.stream()
-                        .mapToDouble(subject -> subject.getFitness(function)/overallFF).map(value -> {
+                        .mapToDouble(specimen -> specimen.getFitness(function)/overallFF).map(value -> {
                             sum.add(value);
                             return sum.doubleValue();
                         }).filter(value -> value < randomizer)
                         .count()));
-
     }
 
     /**
      * Chooses best candidate from population based on function (tournament method)
      * @param population population to choose from
      * @param function function determining principles of choice
-     * @return best Subject
+     * @return best Specimen
      */
-    private static Subject chooseBest(List<Subject> population, DoubleFunction<Double> function) {
+    private static Specimen chooseBest(List<Specimen> population, DoubleFunction<Double> function) {
         return population.stream()
                 .max(Comparator.comparingDouble(value -> value.getFitness(function))).get();
     }
@@ -127,7 +127,7 @@ public final class GeneticAlgorithm {
      * @param candidate candidate to be mutated or not
      * @return new mutated candidate || input candidate
      */
-    public static Subject mutate(Subject candidate) {
+    public static Specimen mutate(Specimen candidate) {
         int randomizer1 = (int) (Math.random()* GENOME_LENGTH);
         int randomizer2 = (int) (Math.random()*8);
 
@@ -138,17 +138,17 @@ public final class GeneticAlgorithm {
         if (success < 0.5 || success > 2.5) {
             return candidate;
         } else {
-            return new Subject(newGenes);
+            return new Specimen(newGenes);
         }
     }
 
     /**
-     * Crosses two Subject candidates
+     * Crosses two Specimen candidates
      * @param candidate1 first candidate to be crossed
      * @param candidate2 second candidate to be crossed
-     * @return new Subject with crossed genome
+     * @return new Specimen with crossed genome
      */
-    public static Subject cross(Subject candidate1, Subject candidate2) {
+    public static Specimen cross(Specimen candidate1, Specimen candidate2) {
         byte[] newGenes = new byte[GENOME_LENGTH];
 
         for (int i = 0; i < GENOME_LENGTH; i++) {
@@ -163,6 +163,6 @@ public final class GeneticAlgorithm {
                 }
             }
         }
-        return new Subject(newGenes);
+        return new Specimen(newGenes);
     }
 }

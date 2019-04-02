@@ -339,7 +339,7 @@ class Network {
     }
 
     void simpleGeneticAlgorithm() {
-        List<Double> resultsList = GeneticAlgorithm.GeneticAlgorithm(20, 10, 0.1, 0.1, GeneticAlgorithm.function);
+        List<Double> resultsList = GeneticAlgorithm.GeneticAlgorithm(20, 20, 0.1, 0.1, GeneticAlgorithm.function);
 
         List<Double> afterCalculationList = resultsList.stream().map(value -> GeneticAlgorithm.function.apply(value)).collect(Collectors.toList());
 
@@ -353,6 +353,7 @@ class Network {
             System.out.println(d);
         }
         System.out.println("=======================");
-        System.out.println("Biggest value: " + afterCalculationList.stream().max(Double::compareTo).get());
+        System.out.println("Biggest initial value: " + resultsList.stream().max(Double::compareTo).get());
+        System.out.println("Biggest result value: " + afterCalculationList.stream().max(Double::compareTo).get());
     }
 }
