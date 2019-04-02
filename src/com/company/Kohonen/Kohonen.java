@@ -17,7 +17,7 @@ public class Kohonen {
     private static final int FRAME_SIZE = 3;
     private static final int NEURON_COUNT = 10;
     private static final double STEP = 0.01;
-    private static final int EPOCHS = 150;
+    private static final int FRAMES_NUMBER = 150;
     private static final String[] PICTURES = {
             "res/kohonen/boat.png",
             "res/kohonen/house.png",
@@ -26,19 +26,24 @@ public class Kohonen {
             "res/kohonen/parrot.png"
     };
 
+    private String fileName;
+    private boolean enableNormalization;
     private List<List<Double>> weights;
-    private boolean isUsed[];
+    private boolean[] isUsed;
     private String imagePath;
     private BufferedImage image;
-    private int compressedFramesNeuronsId[][];
-    private double compressedFramesLength[][];
+    private int[][] compressedFramesNeuronsId;
+    private double[][] compressedFramesLength;
 
     /**
      * Constructor setting the image path
      * @param imagePathIndex index of the image path from PICTURES table
      */
-    public Kohonen(int imagePathIndex) {
+    public Kohonen(int imagePathIndex, boolean enableNormalization) {
         imagePath = PICTURES[imagePathIndex];
+        String[] splitName = PICTURES[imagePathIndex].split("/");
+        this.fileName = splitName[2];
+        this.enableNormalization = enableNormalization;
     }
 
     /**
@@ -101,25 +106,101 @@ public class Kohonen {
         for (int y = FRAME_SIZE/2, idY = 0; y < image.getHeight() - FRAME_SIZE/2; y += FRAME_SIZE, ++idY) {
             for(int x = FRAME_SIZE/2, idX = 0; x < image.getWidth() - FRAME_SIZE/2; x += FRAME_SIZE, ++idX) {
 
-                List<Double> weights = this.weights.get(compressedFramesNeuronsId[idX][idY]);
+                try {
+                    List<Double> weights = this.weights.get(compressedFramesNeuronsId[idX][idY]);
 
-                for (int i = -FRAME_SIZE/2; i <= FRAME_SIZE/2; ++i) {
-                    for (int j = -FRAME_SIZE/2, k = 0; j <= FRAME_SIZE/2; ++j, ++k) {
-                        decompressedImage.getRaster()
-                                .setPixel(
-                                        x + i,
-                                        y + j,
-                                        new int[] {(int) (weights.get(k)*compressedFramesLength[idX][idY])});
+                    for (int i = -FRAME_SIZE/2; i <= FRAME_SIZE/2; ++i) {
+                        for (int j = -FRAME_SIZE/2, k = 0; j <= FRAME_SIZE/2; ++j, ++k) {
+                            decompressedImage.getRaster()
+                                    .setPixel(
+                                            x + i,
+                                            y + j,
+                                            new int[] {(int) (weights.get(k)*compressedFramesLength[idX][idY])});
+                        }
                     }
-                }
+                } catch (IndexOutOfBoundsException ignored) {}
             }
         }
         try {
-            ImageIO.write(decompressedImage, "png", new File("Decompressed.png"));
+            ImageIO.write(decompressedImage, "png", new File("out/" + fileName));
         } catch (IOException e) {
             System.out.println("Something went wrong during saving of the decompressed picture...");
         }
         return decompressedImage;
+    }
+
+    /**
+     * Teaches Kohonen neural network
+     */
+    public void teach() {
+
+        for (int i = 0; i < FRAMES_NUMBER; ++i) {
+            int y = randomNumberInt(FRAME_SIZE/2, image.getHeight() - FRAME_SIZE/2);
+            int x = randomNumberInt(FRAME_SIZE/2, image.getWidth() - FRAME_SIZE/2);
+
+            List<Double> frameValues = getFrameValues(x, y);
+            frameValues = normalize(frameValues);
+
+            int bestId = getBestNeuronId(frameValues);
+            adjustNeuron(bestId, frameValues);
+        }
+        resetUnusedNeurons();
+    }
+
+    /**
+     * Resets weights in unused neurons
+     */
+    private void resetUnusedNeurons() {
+
+        for (int i = 0; i < weights.size(); i++) {
+            if (!isUsed[i]) {
+                for (int j = 0; j < weights.get(i).size(); ++j){
+                    weights.get(i).set(j, 0.0);
+                }
+            }
+        }
+    }
+
+    /**
+     * Adjusts neuron's weights
+     * @param id id of the neuron
+     * @param neuronWeights neuron weights (frame values)
+     */
+    private void adjustNeuron(int id, List<Double> neuronWeights) {
+
+        List<Double> weights = this.weights.get(id);
+        isUsed[id] = true;
+        assert (neuronWeights.size() == weights.size());
+
+        for (int i = 0; i < weights.size(); i++) {
+            double adjusted = weights.get(i) + STEP*(neuronWeights.get(i) - weights.get(i));
+            weights.set(i, adjusted);
+        }
+
+        if (enableNormalization) this.weights.set(id, normalize(weights));
+        else this.weights.set(id, weights);
+    }
+
+    /**
+     * Calculates peak signal-to-noise ratio
+     * @param image decompressed image
+     * @return double representing peak signal-to-noise ratio
+     */
+    public double psnr(BufferedImage image) {
+        assert this.image.getHeight() == image.getHeight();
+        assert this.image.getWidth() == image.getWidth();
+
+        double mse = 0;
+
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                mse += Math.pow(this.image.getRaster().getPixel(x, y, (int[]) null)[0] -
+                                    image.getRaster().getPixel(x, y, (int[]) null)[0], 2);
+            }
+        }
+        mse /= this.image.getWidth()*this.image.getHeight();
+
+        return 10*Math.log10(255.0*255.0/mse);
     }
 
     /**
@@ -152,8 +233,8 @@ public class Kohonen {
     private List<Double> getFrameValues(int x, int y) {
         List<Double> frameValues = new ArrayList<>();
 
-        for (int i = -FRAME_SIZE/2; i <= FRAME_SIZE; ++i) {
-            for (int j = -FRAME_SIZE/2; j <= FRAME_SIZE; ++j) {
+        for (int i = -FRAME_SIZE/2; i <= FRAME_SIZE/2; ++i) {
+            for (int j = -FRAME_SIZE/2; j <= FRAME_SIZE/2; ++j) {
 
                 double[] pixels = image.getRaster().getPixel(x + i, y + j, (double[]) null);
                 frameValues.add(pixels[0]);
@@ -163,9 +244,20 @@ public class Kohonen {
     }
 
     /**
+     * Helper method to get random integer in specified range
+     * @param min lower range boundary
+     * @param max upper range boundary
+     * @return random integer
+     */
+    private static int randomNumberInt(int min, int max) {
+        Random random = new Random();
+        return (int) Math.floor(random.nextDouble()*(max - min) + min);
+    }
+
+    /**
      * Method to get vector's length
-     * @param vector
-     * @return
+     * @param vector provided vector
+     * @return double representing vector's length
      */
     private static double getVectorLength(List<Double> vector) {
         return euclidean(vector, Collections.nCopies(vector.size(), 0.0));

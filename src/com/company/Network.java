@@ -360,12 +360,12 @@ class Network {
 
     void kohonen(){
 
-        Kohonen kohonen = new Kohonen(0);
+        Kohonen kohonen = new Kohonen(0, true);
         kohonen.init();
         kohonen.teach();
         kohonen.compress();
 
         BufferedImage imageDecompressed = kohonen.decompress();
-        System.out.println("PSNR is: " + kohonen.psnr(imageDecompressed) + " dB");
+        System.out.println("Peak signal-to-noise ratio equals: " + kohonen.psnr(imageDecompressed) + " dB");
     }
 }
