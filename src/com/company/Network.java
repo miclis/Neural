@@ -366,6 +366,7 @@ class Network {
         kohonen.compress();
 
         BufferedImage imageDecompressed = kohonen.decompress();
+        System.out.println("Compression ratio equals: " + kohonen.cr(imageDecompressed));
         System.out.println("Peak signal-to-noise ratio equals: " + kohonen.psnr(imageDecompressed) + " dB");
     }
 }

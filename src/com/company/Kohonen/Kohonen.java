@@ -2,12 +2,10 @@ package com.company.Kohonen;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Kohonen {
 
@@ -34,6 +32,7 @@ public class Kohonen {
     private BufferedImage image;
     private int[][] compressedFramesNeuronsId;
     private double[][] compressedFramesLength;
+    private byte[] originalByteArray;
 
     /**
      * Constructor setting the image path
@@ -52,6 +51,9 @@ public class Kohonen {
     public void init() {
         try {
             image = ImageIO.read(new File(imagePath));
+
+            originalByteArray = toByteArrayAutoClosable(image);
+
         } catch (IOException e) {
             System.out.println("Something went wrong during file loading...");
             return;
@@ -179,6 +181,32 @@ public class Kohonen {
 
         if (enableNormalization) this.weights.set(id, normalize(weights));
         else this.weights.set(id, weights);
+    }
+
+    /**
+     * Calculates compression ratio
+     * @param compressedImage image to compare original with
+     * @return compression ratio
+     */
+    public double cr(BufferedImage compressedImage) {
+        assert this.image.getHeight() == image.getHeight();
+        assert this.image.getWidth() == image.getWidth();
+
+        try {
+            byte[] byteArrayCompressed = toByteArrayAutoClosable(compressedImage);
+
+            return (double) originalByteArray.length/byteArrayCompressed.length;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    private static byte[] toByteArrayAutoClosable(BufferedImage image) throws IOException {
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()){
+            ImageIO.write(image, "png", out);
+            return out.toByteArray();
+        }
     }
 
     /**
