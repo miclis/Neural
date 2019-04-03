@@ -102,8 +102,8 @@ public class Kohonen {
      * Decompresses the picture and saves it to the file
      * @return decompressed picture
      */
-    public BufferedImage decompress() {
-        BufferedImage decompressedImage = new BufferedImage(image.getHeight(), image.getWidth(), image.getType());
+    public BufferedImage finish() {
+        BufferedImage finalImage = new BufferedImage(image.getHeight(), image.getWidth(), image.getType());
         // Starts from coordinates of the central pixel
         for (int y = FRAME_SIZE/2, idY = 0; y < image.getHeight() - FRAME_SIZE/2; y += FRAME_SIZE, ++idY) {
             for(int x = FRAME_SIZE/2, idX = 0; x < image.getWidth() - FRAME_SIZE/2; x += FRAME_SIZE, ++idX) {
@@ -113,7 +113,7 @@ public class Kohonen {
 
                     for (int i = -FRAME_SIZE/2; i <= FRAME_SIZE/2; ++i) {
                         for (int j = -FRAME_SIZE/2, k = 0; j <= FRAME_SIZE/2; ++j, ++k) {
-                            decompressedImage.getRaster()
+                            finalImage.getRaster()
                                     .setPixel(
                                             x + i,
                                             y + j,
@@ -124,11 +124,11 @@ public class Kohonen {
             }
         }
         try {
-            ImageIO.write(decompressedImage, "png", new File("out/" + fileName));
+            ImageIO.write(finalImage, "png", new File("out/" + fileName));
         } catch (IOException e) {
-            System.out.println("Something went wrong during saving of the decompressed picture...");
+            System.out.println("Something went wrong during saving of the picture...");
         }
-        return decompressedImage;
+        return finalImage;
     }
 
     /**
